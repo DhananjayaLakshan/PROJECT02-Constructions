@@ -1,11 +1,12 @@
 import axios from "axios";
-import { Button, Table } from "flowbite-react";
+import { Button, Table, Card } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { HiMiniUserGroup } from "react-icons/hi2";
 
-export default function DashPackage() {
+export default function DashClient() {
   const [packages, setPackages] = useState([]);
 
   useEffect(() => {
@@ -45,14 +46,26 @@ export default function DashPackage() {
 
   return (
     <div className="overflow-x-auto mx-auto w-full mr-2 mt-6 ml-2">
-      <div className="mb-5 ml-1">
-        <Link to="/create-package">
-          <Button outline>
-            <IoIosAddCircleOutline className="mr-2 text-xl " />
-            ADD PACKAGE
-          </Button>
-        </Link>
+      <h1 className="text-4xl">Clients</h1>
+      <div className="flex justify-between">
+        <div></div>
+        <div className="mr-5">
+          <Link to="/client">
+            <Button color="blue">
+              <IoIosAddCircleOutline className="mr-2 text-xl " />
+              New Client
+            </Button>
+          </Link>
+        </div>
       </div>
+
+      <Card href="#" className="max-w-sm mb-5">
+        <div className="flex gap-5">
+          <p className="text-lg  text-gray-700 dark:text-gray-400">Clients</p>
+          <HiMiniUserGroup className="ml-48 text-6xl" />
+        </div>
+        <h1 className="text-4xl">05</h1>
+      </Card>
       <Table>
         <Table.Head>
           <Table.HeadCell>Image</Table.HeadCell>

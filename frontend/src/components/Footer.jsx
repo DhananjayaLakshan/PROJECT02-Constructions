@@ -1,63 +1,32 @@
 import { Footer } from "flowbite-react";
 import { Link } from "react-router-dom";
+import logo from "../image/logo.png";
 
 export default function FooterCom() {
   return (
-    <Footer container className="border border-t-8 border-teal-500">
+    <Footer container className="border border-t-8 bg-gray-900">
       <div className="w-full max-w-7xl mx-auto">
-        <div className="grid w-full justify-between sm:flex md:grid-cols-1">
+        <div className="grid w-full justify-between ">
           <div className="mt-5">
             <Link
               to="/"
-              className="self-center whitespace-nowrap text-lg sm:text-xl font-semibold"
+              className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold"
             >
-              <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-lg">
-                Restaurant
-              </span>
+              <img src={logo} alt="logo" className="h-20" />
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6">
+          <div className="grid grid-cols-4 mt-4 sm:grid-cols-4 sm:gap-6">
             <div className="">
               <Footer.Title title="About" />
-              <Footer.LinkGroup col>
-                <Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-                  Link
-                </Footer.Link>
-                <Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-                  Link
-                </Footer.Link>
-                <Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-                  Link
-                </Footer.Link>
-              </Footer.LinkGroup>
             </div>
             <div className="">
-              <Footer.Title title="About" />
-              <Footer.LinkGroup col>
-                <Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-                  Link
-                </Footer.Link>
-                <Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-                  Link
-                </Footer.Link>
-                <Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-                  Link
-                </Footer.Link>
-              </Footer.LinkGroup>
+              <Footer.Title title="Packages" />
             </div>
             <div className="">
-              <Footer.Title title="About" />
-              <Footer.LinkGroup col>
-                <Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-                  Link
-                </Footer.Link>
-                <Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-                  Link
-                </Footer.Link>
-                <Footer.Link href="#" target="_blank" rel="noopener noreferrer">
-                  Link
-                </Footer.Link>
-              </Footer.LinkGroup>
+              <Footer.Title title="Contact" />
+            </div>
+            <div className="">
+              <Footer.Title title="Privacy Policy" />
             </div>
           </div>
         </div>
@@ -65,7 +34,7 @@ export default function FooterCom() {
         <div className="">
           <Footer.Copyright
             href="#"
-            by="UTTMS"
+            by="ShanConstructions. All rights reserved"
             year={new Date().getFullYear()}
           />
         </div>
