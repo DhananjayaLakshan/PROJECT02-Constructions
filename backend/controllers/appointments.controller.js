@@ -45,8 +45,10 @@ const getAppointment = async (req, res, next) => {
             query._id = req.query.appointmentId
         }
 
+        const totalAppointments = await Appointment.countDocuments()
+
         const appointment = await Appointment.find(query).sort({ updatedAt: sortDirection })
-        res.status(200).json(appointment)
+        res.status(200).json({ appointment, totalAppointments })
 
     } catch (error) {
         next(error)

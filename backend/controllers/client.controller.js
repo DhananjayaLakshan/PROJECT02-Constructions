@@ -39,8 +39,10 @@ const getClient = async (req, res, next) => {
             query._id = req.query.clientId
         }
 
+        const totalClients = await Client.countDocuments()
+
         const client = await Client.find(query).sort({ updatedAt: sortDirection })
-        res.status(200).json(client)
+        res.status(200).json({ client, totalClients })
 
     } catch (error) {
         next(error)
