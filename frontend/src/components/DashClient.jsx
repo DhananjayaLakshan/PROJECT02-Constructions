@@ -5,21 +5,25 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { HiMiniUserGroup } from "react-icons/hi2";
+import { PiNotePencilBold } from "react-icons/pi";
+import { IoTrashBinOutline } from "react-icons/io5";
 
 export default function DashClient() {
-  const [packages, setPackages] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [totalCount, setTotalCount] = useState("");
 
   useEffect(() => {
-    const fetchPackages = async () => {
+    const fetchClients = async () => {
       try {
-        const { data } = await axios.get("/api/package");
-        setPackages(data);
+        const { data } = await axios.get("/api/client");
+        setClients(data.client);
+        setTotalCount(data.totalClients);
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchPackages();
+    fetchClients();
   }, []);
 
   const handleDelete = async (id) => {
@@ -33,9 +37,9 @@ export default function DashClient() {
     });
     if (result.isConfirmed) {
       try {
-        const res = await axios.delete(`/api/package/${id}`);
-        setPackages((currentPackages) =>
-          currentPackages.filter((p) => p._id !== id)
+        const res = await axios.delete(`/api/client/${id}`);
+        setClients((currentClients) =>
+          currentClients.filter((p) => p._id !== id)
         );
         console.log(res);
       } catch (error) {
@@ -44,6 +48,7 @@ export default function DashClient() {
     }
   };
 
+  console.log(clients);
   return (
     <div className="overflow-x-auto mx-auto w-full mr-2 mt-6 ml-2">
       <h1 className="text-4xl">Clients</h1>
@@ -64,46 +69,43 @@ export default function DashClient() {
           <p className="text-lg  text-gray-700 dark:text-gray-400">Clients</p>
           <HiMiniUserGroup className="ml-48 text-6xl" />
         </div>
-        <h1 className="text-4xl">05</h1>
+        <h1 className="text-4xl">{totalCount}</h1>
       </Card>
       <Table>
         <Table.Head>
-          <Table.HeadCell>Image</Table.HeadCell>
-          <Table.HeadCell>Package Name</Table.HeadCell>
-          <Table.HeadCell>Package Details</Table.HeadCell>
-          <Table.HeadCell>Price</Table.HeadCell>
+          <Table.HeadCell>ProjectID</Table.HeadCell>
+          <Table.HeadCell>Name</Table.HeadCell>
+          <Table.HeadCell>Address</Table.HeadCell>
+          <Table.HeadCell>Contact Number</Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          {packages.map((pckg, index) => (
+          {clients.map((client, index) => (
             <Table.Row key={index} className="bg-slate-200">
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 ">
-                <img
-                  src={pckg.image}
-                  alt="package img"
-                  style={{ width: "100px", height: "auto" }}
-                />
-              </Table.Cell>
-              <Table.Cell>{pckg.packageName}</Table.Cell>
-              <Table.Cell>{pckg.packageDetails}</Table.Cell>
-              <Table.Cell>Rs.{pckg.packagePrice}</Table.Cell>
+              <Table.Cell>{client.projectID}</Table.Cell>
+              <Table.Cell>{client.name}</Table.Cell>
+              <Table.Cell>{client.address}</Table.Cell>
+              <Table.Cell>{client.phone}</Table.Cell>
               <Table.Cell>
-                <a
-                  href={`/update-package/${pckg._id}`}
-                  className="font-medium text-cyan-600 hover:underline"
-                >
-                  Edit
-                </a>
-                <a
-                  onClick={() => {
-                    handleDelete(pckg._id);
-                  }}
-                  className="font-medium text-red-600 hover:underline ml-7 cursor-pointer"
-                >
-                  Delete
-                </a>
+                <div className="flex flex-row gap-4">
+                  <a
+                    href={`/update-client/${client._id}`}
+                    className="font-medium text-cyan-600 hover:underline"
+                  >
+                    <PiNotePencilBold className="text-2xl" />
+                  </a>
+
+                  <a
+                    onClick={() => {
+                      handleDelete(client._id);
+                    }}
+                    className="font-medium text-red-600 hover:underline ml-7 cursor-pointer"
+                  >
+                    <IoTrashBinOutline className="text-2xl" />
+                  </a>
+                </div>
               </Table.Cell>
             </Table.Row>
           ))}

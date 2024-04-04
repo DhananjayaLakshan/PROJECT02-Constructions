@@ -3,21 +3,41 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Appointment() {
-  //   const [formData, setFormData] = useState({});
-  //   const navigate = useNavigate();
-  //   onst handleChange = (e) => {
-  //     setFormData({ ...formData, [e.target.name]: e.target.value });
-  //   };
+  const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  console.log(formData);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const appointmentData = { ...formData, userId: currentUser._id };
+
+    try {
+      await axios.post("/api/appointment", appointmentData);
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
       <form
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         className="flex flex-col gap-4 bg-white p-5"
       >
         <h1 className="text-center text-3xl my-7 font-semibold">
-          Create Package
+          MAKE AN APPOINTMENT
         </h1>
         <div className="flex flex-col gap-4 sm:flex-row justify-between mt-5">
           <TextInput
@@ -26,7 +46,7 @@ export default function Appointment() {
             required
             name="fullName"
             className="flex-1"
-            //   onChange={handleChange}
+            onChange={handleChange}
           />
 
           <TextInput
@@ -35,7 +55,7 @@ export default function Appointment() {
             required
             name="email"
             className="flex-1"
-            //   onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-col gap-4 sm:flex-row justify-between mt-5">
@@ -45,7 +65,7 @@ export default function Appointment() {
             required
             name="phone"
             className="flex-1"
-            //   onChange={handleChange}
+            onChange={handleChange}
           />
 
           <TextInput
@@ -54,7 +74,7 @@ export default function Appointment() {
             required
             name="companyName"
             className="flex-1"
-            //   onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-col gap-4 sm:flex-row justify-between mt-5">
@@ -67,7 +87,7 @@ export default function Appointment() {
               required
               name="date"
               className="flex-1"
-              //   onChange={handleChange}
+              onChange={handleChange}
             />
           </div>
           <div className="flex-1">
@@ -79,7 +99,7 @@ export default function Appointment() {
               required
               name="time"
               className="flex-1"
-              //   onChange={handleChange}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -90,7 +110,7 @@ export default function Appointment() {
             placeholder="Message"
             required
             rows={4}
-            //   onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
         <div className="flex justify-between">

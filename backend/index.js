@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const clientRouter = require('./routes/client.route.js')
 const appointmrntRouter = require('./routes/appointments.route.js')
+const authRouter = require('./routes/auth.route.js')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
@@ -23,6 +24,7 @@ app.listen(5000, () => {
 
 app.use('/api/client', clientRouter)
 app.use('/api/appointment', appointmrntRouter)
+app.use('/api/auth', authRouter)
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500

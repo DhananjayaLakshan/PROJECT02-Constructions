@@ -4,9 +4,9 @@ const errorHandler = require('../utils/error')
 const createAppointment = async (req, res, next) => {
 
     try {
-        const { fullName, email, phone, companyName, date, time, message } = req.body
+        const { fullName, email, phone, companyName, date, time, message, userId } = req.body
 
-        if (!fullName || !email || !phone || !companyName || !date || !time) {
+        if (!fullName || !email || !phone || !companyName || !date || !time || !userId) {
             return next(errorHandler(400, 'Please fill out all the fields'))
         }
 
@@ -17,7 +17,8 @@ const createAppointment = async (req, res, next) => {
             companyName,
             date,
             time,
-            message
+            message,
+            userId
 
         })
 
@@ -45,6 +46,10 @@ const getAppointment = async (req, res, next) => {
             query._id = req.query.appointmentId
         }
 
+        if (req.query.userId) {
+            query.userId = req.query.userId
+        }
+
         const totalAppointments = await Appointment.countDocuments()
 
         const appointment = await Appointment.find(query).sort({ updatedAt: sortDirection })
@@ -59,7 +64,7 @@ const getAppointment = async (req, res, next) => {
 const updateAppointment = async (req, res, next) => {
 
     try {
-        const { fullName, email, phone, companyName, date, time, message } = req.body
+        const { fullName, email, phone, companyName, date, time, message, status } = req.body
 
 
         const updatedAppointment = await Appointment.findByIdAndUpdate(req.params.id, {
@@ -70,7 +75,8 @@ const updateAppointment = async (req, res, next) => {
                 companyName,
                 date,
                 time,
-                message
+                message,
+                status
             }
         }, { new: true })
 

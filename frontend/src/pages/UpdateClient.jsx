@@ -1,25 +1,48 @@
 import { Button, TextInput } from "flowbite-react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function CreateClient() {
+export default function UpdateClient() {
+  const { id } = useParams();
   const [formData, setFormData] = useState({});
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const { data } = await axios.get(`/api/client?clientId=${id}`);
+        setFormData(data.client[0]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchClients();
+  }, [id]);
+
+  console.log(formData);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  console.log(formData);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post("/api/client", formData);
-
-      navigate("/dashboard?tab=client");
+      await axios.put(`/api/client/${id}`, formData);
+      toast.success("Updated successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (error) {
       console.error(error);
     }
@@ -39,6 +62,7 @@ export default function CreateClient() {
             required
             name="name"
             className="flex-1"
+            value={formData.name}
             onChange={handleChange}
           />
 
@@ -48,6 +72,7 @@ export default function CreateClient() {
             required
             name="address"
             className="flex-1"
+            value={formData.address}
             onChange={handleChange}
           />
         </div>
@@ -58,6 +83,7 @@ export default function CreateClient() {
             required
             name="projectID"
             className="flex-1"
+            value={formData.projectID}
             onChange={handleChange}
           />
 
@@ -67,6 +93,7 @@ export default function CreateClient() {
             required
             name="phone"
             className="flex-1"
+            value={formData.phone}
             onChange={handleChange}
           />
         </div>
@@ -78,6 +105,7 @@ export default function CreateClient() {
             required
             name="documents"
             className="flex-1"
+            value={formData.documents}
             onChange={handleChange}
           />
         </div>
@@ -96,6 +124,7 @@ export default function CreateClient() {
           </div>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }

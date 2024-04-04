@@ -1,16 +1,20 @@
 import { Button, Card } from "flowbite-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
-import { IoTrashBinOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
-export default function DashAppointment() {
+export default function Profile() {
   const [appointments, setAppointments] = useState([]);
+  const { currentUser } = useSelector((state) => state.user);
+
+  console.log(currentUser._id);
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const { data } = await axios.get("/api/appointment");
+        const { data } = await axios.get(
+          `/api/appointment?userId=${currentUser._id}`
+        );
         setAppointments(data.appointment);
       } catch (error) {
         console.error(error);
@@ -18,49 +22,7 @@ export default function DashAppointment() {
     };
 
     fetchAppointments();
-  }, []);
-
-  console.log(appointments);
-
-  const handleDelete = async (id) => {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to delete this course?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it",
-      cancelButtonText: "No, keep it",
-    });
-
-    if (result.isConfirmed) {
-      try {
-        const res = await axios.delete(`/api/appointment/${id}`);
-        setAppointments((currentAppointment) =>
-          currentAppointment.filter((p) => p._id !== id)
-        );
-        console.log(res);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
-  const handleUpdate = async (id) => {
-    try {
-      const formdata = { status: "successfull" };
-      const res = await axios.put(`/api/appointment/${id}`, formdata);
-      setAppointments((currentAppointments) =>
-        currentAppointments.map((appointment) =>
-          appointment._id === id
-            ? { ...appointment, status: "successful" }
-            : appointment
-        )
-      );
-      console.log(res);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, [currentUser._id]);
 
   return (
     <div className="overflow-x-auto mx-auto w-full mr-2 mt-6 ml-2 mb-6">
@@ -68,7 +30,7 @@ export default function DashAppointment() {
 
       {appointments.map((appointment, index) => (
         <Card key={index} className="max-w-4xl mb-7 ml-3">
-          <div className="flex justify-end">
+          {/* <div className="flex justify-end">
             <a
               onClick={() => {
                 handleDelete(appointment._id);
@@ -77,7 +39,7 @@ export default function DashAppointment() {
             >
               <IoTrashBinOutline className="text-2xl" />
             </a>
-          </div>
+          </div> */}
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             <span className="mr-4">{appointment.date}</span>
             <span>{appointment.time}</span>
@@ -106,22 +68,22 @@ export default function DashAppointment() {
               <span className="font-medium">{appointment.status}</span>
             </p>
           </div>
-          <div className="flex justify-end gap-3">
-            <div>
-              <Button color="blue">View</Button>
-            </div>
-            <div className="mr-5">
-              <Button
-                color="blue"
-                disabled={appointment.status === "successfull"}
-                onClick={() => {
-                  handleUpdate(appointment._id);
-                }}
-              >
-                Confirm
-              </Button>
-            </div>
-          </div>
+          {/* <div className="flex justify-end gap-3">
+        <div>
+          <Button color="blue">View</Button>
+        </div>
+        <div className="mr-5">
+          <Button
+            color="blue"
+            disabled={appointment.status === "successfull"}
+            onClick={() => {
+              handleUpdate(appointment._id);
+            }}
+          >
+            Confirm
+          </Button>
+        </div>
+      </div> */}
         </Card>
       ))}
     </div>

@@ -17,9 +17,9 @@ const createClient = async (req, res, next) => {
             documents
         })
 
-        const savedClient = await newClient.save()
+        await newClient.save()
 
-        res.status(201).json({ message: 'Client created', savedClient })
+        res.status(201).json({ message: 'Client created' })
 
     } catch (error) {
         next(error)
