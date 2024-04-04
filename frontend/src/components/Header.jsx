@@ -68,15 +68,15 @@ export default function Header() {
                 {currentUser && currentUser.email}
               </span>
             </Dropdown.Header>
-            {currentUser && currentUser.isAdmin ? (
+            {currentUser && currentUser.isAdmin && (
               <Link to={"/dashboard?tab=client"}>
                 <Dropdown.Item>Dashboard</Dropdown.Item>
               </Link>
-            ) : (
-              <Link to={"/profile"}>
-                <Dropdown.Item>Profile</Dropdown.Item>
-              </Link>
             )}
+            <Link to={"/profile"}>
+              <Dropdown.Item>Profile</Dropdown.Item>
+            </Link>
+
             <Dropdown.Divider />
             <Dropdown.Item onClick={handleSignout}>Signout</Dropdown.Item>
           </Dropdown>

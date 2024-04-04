@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Button, Table, Card } from "flowbite-react";
+import { Button, Table, Card, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -7,15 +7,17 @@ import Swal from "sweetalert2";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { PiNotePencilBold } from "react-icons/pi";
 import { IoTrashBinOutline } from "react-icons/io5";
+import { AiOutlineSearch } from "react-icons/ai";
 
 export default function DashClient() {
   const [clients, setClients] = useState([]);
   const [totalCount, setTotalCount] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const { data } = await axios.get("/api/client");
+        const { data } = await axios.get(`/api/client?name=${searchQuery}`);
         setClients(data.client);
         setTotalCount(data.totalClients);
       } catch (error) {
@@ -24,7 +26,7 @@ export default function DashClient() {
     };
 
     fetchClients();
-  }, []);
+  }, [searchQuery]);
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -71,6 +73,19 @@ export default function DashClient() {
         </div>
         <h1 className="text-4xl">{totalCount}</h1>
       </Card>
+
+      <div className="w-96 mb-10">
+        <form>
+          <TextInput
+            type="text"
+            placeholder="Search By Client Name..."
+            rightIcon={AiOutlineSearch}
+            className="hidden lg:inline"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </form>
+      </div>
       <Table>
         <Table.Head>
           <Table.HeadCell>ProjectID</Table.HeadCell>
