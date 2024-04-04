@@ -1,9 +1,9 @@
 import { Button, TextInput, Label, Textarea } from "flowbite-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function Appointment() {
   const [formData, setFormData] = useState({});

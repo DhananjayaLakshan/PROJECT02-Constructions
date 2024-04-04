@@ -1,4 +1,4 @@
-import { Button, Card } from "flowbite-react";
+import { Card } from "flowbite-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -90,22 +90,6 @@ export default function Profile() {
               <span className="font-medium">{appointment.status}</span>
             </p>
           </div>
-          {/* <div className="flex justify-end gap-3">
-        <div>
-          <Button color="blue">View</Button>
-        </div>
-        <div className="mr-5">
-          <Button
-            color="blue"
-            disabled={appointment.status === "successfull"}
-            onClick={() => {
-              handleUpdate(appointment._id);
-            }}
-          >
-            Confirm
-          </Button>
-        </div>
-      </div> */}
         </Card>
       ))}
     </div>

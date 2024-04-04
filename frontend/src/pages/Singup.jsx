@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Spinner, Alert, Button, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
-import axios from "axios";
 import logo from "../image/logo.png";
 
 export default function Signup() {

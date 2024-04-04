@@ -5,13 +5,12 @@ import Dashboard from "./pages/Dashboard";
 import Restaurants from "./pages/Home";
 import Appointment from "./pages/Appointment";
 import CreateClient from "./pages/CreateClient";
-import Signup from "./pages/Singup"; // Make sure the file name is correct. It might be a typo here (Signup vs Singup).
+import Signup from "./pages/Singup";
 import Signin from "./pages/Signin";
 import Profile from "./pages/Profile";
 import UpdateClient from "./pages/UpdateClient";
 import HeaderAdmin from "./components/HeaderAdmin";
 
-// Creating a wrapper component to use the useLocation hook
 function Layout() {
   const location = useLocation();
   const isAdminRoute =
@@ -20,7 +19,6 @@ function Layout() {
 
   return (
     <>
-      {/* Render HeaderAdmin only for admin routes */}
       {isAdminRoute ? <HeaderAdmin /> : <Header />}
       <Routes>
         <Route path="/sign-up" element={<Signup />} />
@@ -32,7 +30,7 @@ function Layout() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/update-client/:id" element={<UpdateClient />} />
       </Routes>
-      {/* Do not display the footer for admin routes */}
+
       {!isAdminRoute && <Footer />}
     </>
   );
