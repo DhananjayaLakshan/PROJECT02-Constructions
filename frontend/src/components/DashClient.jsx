@@ -8,6 +8,8 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { PiNotePencilBold } from "react-icons/pi";
 import { IoTrashBinOutline } from "react-icons/io5";
 import { AiOutlineSearch } from "react-icons/ai";
+import { ImFilter } from "react-icons/im";
+import { IoIosRefresh } from "react-icons/io";
 
 export default function DashClient() {
   const [clients, setClients] = useState([]);
@@ -37,6 +39,7 @@ export default function DashClient() {
       confirmButtonText: "Yes, delete it",
       cancelButtonText: "No, keep it",
     });
+
     if (result.isConfirmed) {
       try {
         const res = await axios.delete(`/api/client/${id}`);
@@ -74,17 +77,36 @@ export default function DashClient() {
         <h1 className="text-4xl">{totalCount}</h1>
       </Card>
 
-      <div className="w-96 mb-10">
-        <form>
-          <TextInput
-            type="text"
-            placeholder="Search By Client Name..."
-            rightIcon={AiOutlineSearch}
-            className="hidden lg:inline"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </form>
+      <div className="flex flex-row h-12 mb-4 rounded">
+        <div className="rounded border-gray-300 border-2">
+          <ImFilter className="mt-2 p-1 text-3xl" />
+        </div>
+        <div className="p-2 rounded border-gray-300 border-2">
+          <p className=" p-1 text-xl ">Filter By</p>
+        </div>
+        <div className="p-2 rounded border-gray-300 border-2">
+          <p className="p-1 text-xl ">A-Z</p>
+        </div>
+        <div className="p-2 rounded border-gray-300 border-2">
+          <p className=" p-1 text-xl ">No.of Projects</p>
+        </div>
+        <div className="p-2 rounded border-gray-300 border-2">
+          <p className=" p-1 text-xl flex text-red-500">
+            <IoIosRefresh className="mr-2 mt-1" /> Reset Filter
+          </p>
+        </div>
+        <div className="ml-3 w-96 h-1/4">
+          <form>
+            <TextInput
+              type="text"
+              placeholder="Search By Client Name..."
+              rightIcon={AiOutlineSearch}
+              className="hidden lg:inline"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </form>
+        </div>
       </div>
       <Table>
         <Table.Head>
