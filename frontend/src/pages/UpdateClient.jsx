@@ -54,7 +54,7 @@ export default function UpdateClient() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 bg-white p-5"
       >
-        <h1 className="text-center text-3xl my-7 font-semibold">New Clent</h1>
+        <h1 className="text-center text-3xl my-7 font-semibold">Edit Client</h1>
         <div className="flex flex-col gap-4 sm:flex-row justify-between mt-5">
           <TextInput
             type="text"
