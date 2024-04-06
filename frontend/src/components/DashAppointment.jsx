@@ -3,15 +3,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { IoTrashBinOutline } from "react-icons/io5";
+import { CgAlbum } from "react-icons/cg";
 
 export default function DashAppointment() {
   const [appointments, setAppointments] = useState([]);
+  const [totalAppointments, setTotalAppointments] = useState("");
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
         const { data } = await axios.get("/api/appointment");
         setAppointments(data.appointment);
+        setTotalAppointments(data.totalAppointments);
       } catch (error) {
         console.error(error);
       }
@@ -66,6 +69,18 @@ export default function DashAppointment() {
     <div className="overflow-x-auto mx-auto w-full mr-2 mt-6 ml-2 mb-6">
       <h1 className="text-4xl mb-10">Appointments</h1>
 
+      <div className="flex gap-2 ml-3">
+        <Card href="#" className="max-w-sm mb-5">
+          <div className="flex ">
+            <p className="font-normal text-gray-700 dark:text-gray-400">
+              <span className="font-medium">Total Appointments</span>
+            </p>
+            <CgAlbum className="ml-48 text-6xl" />
+          </div>
+          <h1 className="text-4xl">{totalAppointments}</h1>
+        </Card>
+      </div>
+
       {appointments.map((appointment, index) => (
         <Card key={index} className="max-w-4xl mb-7 ml-3">
           <div className="flex justify-end">
@@ -107,9 +122,6 @@ export default function DashAppointment() {
             </p>
           </div>
           <div className="flex justify-end gap-3">
-            <div>
-              <Button color="blue">View</Button>
-            </div>
             <div className="mr-5">
               <Button
                 color="blue"
